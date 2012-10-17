@@ -102,6 +102,23 @@ module Specstar
           end
         end
       end
+
+      RSpec::Matchers.define :validate_numericality_of do |attr, options|
+        match do |model|
+          (has_attribute?(model, attr) || has_association?(model, attr)) &&
+              model._validators[attr].select do |validator|
+                validator.instance_of?(ActiveModel::Validations::NumericalityValidator) && validator.options.merge(options) == validator.options
+              end.size > 0
+        end
+
+        failure_message_for_should do |model|
+          if has_attribute?(model, attr) || has_association?(model, attr)
+            "expected #{model.class} to validate numericality of #{attr} in [#{options.delete(:in).map(&:to_s).join(', ')}]."
+          else
+            "expected #{model.class} to have an attribute or association #{attr}."
+          end
+        end
+      end
     end
   end
 end

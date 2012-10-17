@@ -1,5 +1,7 @@
 This package helps you check that the attributes of a model have been defined correctly.
 
+**have_attribute**
+
 You may have created a model `Store` as follows:
 
     class CreateStores < ActiveRecord::Migration
@@ -23,6 +25,11 @@ The `have_attribute` matcher allows you test each of these attributes as follows
       it { should have_attribute(:url).with(:type => :string, :limit => 1024) }
       it { should have_attribute(:open).with(:type => :boolean) }
     end
+
+**validate_inclusion_of**
+**validate_numericality_of**
+**validate_presence_of**
+**validate_uniqueness_of**
 
 To make this matcher available in your model specs, do the following:
 
