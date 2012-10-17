@@ -1,3 +1,6 @@
+# 0.0.6
+  * Bug: Do not crash when validate_numericality_of is used without any options.
+
 # 0.0.5
   * Feature: Introducing validate_numericality_of matcher.
 
