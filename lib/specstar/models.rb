@@ -104,6 +104,8 @@ module Specstar
       end
 
       RSpec::Matchers.define :validate_numericality_of do |attr, options|
+        options = options || {}
+
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&
               model._validators[attr].select do |validator|
