@@ -71,10 +71,11 @@ module Specstar
         end
       end
 
-      RSpec::Matchers.define :validate_uniqueness_of do |attr|
+      RSpec::Matchers.define :validate_uniqueness_of do |attr, options|
         match do |model|
-          (has_attribute?(model, attr) || has_association?(model, attr)) &&
-              model._validators[attr].select { |validator| validator.instance_of? ActiveRecord::Validations::UniquenessValidator }.size > 0
+          (has_attribute?(model, attr) || has_association?(model, attr)) && model._validators[attr].select { |validator|
+	    validator.instance_of?(ActiveRecord::Validations::UniquenessValidator) && (options.nil? || (options.to_a - validator.options.to_a).empty?)
+	  }.size > 0
         end
 
         failure_message_for_should do |model|

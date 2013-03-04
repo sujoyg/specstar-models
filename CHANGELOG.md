@@ -1,3 +1,6 @@
+# 0.0.8
+  * Feature: Support options for validate_uniqueness_of.
+
 # 0.0.6
   * Bug: Do not crash when validate_numericality_of is used without any options.
 

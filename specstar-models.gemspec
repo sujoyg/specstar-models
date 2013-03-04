@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'specstar-models'
-  s.version     = '0.0.7'
+  s.version     = '0.0.8'
   s.date        = Time.now.to_date
   s.summary     = 'RSpec helpers for models.'
   s.authors     = ['Sujoy Gupta']
