@@ -7,6 +7,30 @@ module Specstar
         " of " + hash.map { |key, value| "#{key} #{value}" }.to_sentence if hash.present?
       end
 
+      def validate_presence_of_methods_in_options(model, options)
+        if options[:if] && options[:if].is_a?(Symbol)
+          return false unless model.respond_to? options[:if]
+        end
+
+        if options[:unless] && options[:unless].is_a?(Symbol)
+          return false unless model.respond_to? options[:unless]
+        end
+
+        true
+      end
+
+      def undefined_method_in_options(model, options)
+        if options[:if] && options[:if].is_a?(Symbol)
+          return options[:if] unless model.respond_to? options[:if]
+        end
+
+        if options[:unless] && options[:unless].is_a?(Symbol)
+          return options[:unless] unless model.respond_to? options[:unless]
+        end
+
+        nil
+      end
+
       RSpec::Matchers.define :have_attribute do |attr|
         attr = attr.to_s
 
@@ -56,15 +80,21 @@ module Specstar
         model.class.reflect_on_all_associations.map { |a| a.name }.include? association.to_sym
       end
 
-      RSpec::Matchers.define :validate_presence_of do |attr|
+      RSpec::Matchers.define :validate_presence_of do |attr, options|
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&
-              model._validators[attr].select { |validator| validator.instance_of? ActiveModel::Validations::PresenceValidator }.size > 0
+              model._validators[attr].select do |validator|
+                validator.instance_of?(ActiveModel::Validations::PresenceValidator) && (options.nil? || validate_presence_of_methods_in_options(model, options) && (options.to_a - validator.options.to_a).empty?)
+              end.size > 0
         end
 
         failure_message_for_should do |model|
           if has_attribute?(model, attr) || has_association?(model, attr)
-            "expected #{model.class} to validate presence of #{attr}."
+            if options.nil? || validate_presence_of_methods_in_options(model, options)
+              "expected #{model.class} to validate presence of #{attr}."
+            else
+              "expected #{model.class} to define #{undefined_method_in_options(model, options)}."
+            end
           else
             "expected #{model.class} to have an attribute or association #{attr}."
           end
@@ -73,14 +103,18 @@ module Specstar
 
       RSpec::Matchers.define :validate_uniqueness_of do |attr, options|
         match do |model|
-          (has_attribute?(model, attr) || has_association?(model, attr)) && model._validators[attr].select { |validator|
-	    validator.instance_of?(ActiveRecord::Validations::UniquenessValidator) && (options.nil? || (options.to_a - validator.options.to_a).empty?)
-	  }.size > 0
+          (has_attribute?(model, attr) || has_association?(model, attr)) && model._validators[attr].select do |validator|
+            validator.instance_of?(ActiveRecord::Validations::UniquenessValidator) && (options.nil? || validate_presence_of_methods_in_options(model, options) && (options.to_a - validator.options.to_a).empty?)
+          end.size > 0
         end
 
         failure_message_for_should do |model|
           if has_attribute?(model, attr) || has_association?(model, attr)
-            "expected #{model.class} to validate uniqueness of #{attr}."
+            if options.nil? || validate_presence_of_methods_in_options(model, options)
+              "expected #{model.class} to validate uniqueness of #{attr}."
+            else
+              "expected #{model.class} to define #{undefined_method_in_options(model, options)}."
+            end
           else
             "expected #{model.class} to have an attribute or association #{attr}."
           end
