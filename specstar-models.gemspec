@@ -10,4 +10,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'specstar-remarkable', '~> 0.0.0'
   s.add_development_dependency 'rspec-core'
+  s.add_development_dependency 'rspec-expectations'
 end
