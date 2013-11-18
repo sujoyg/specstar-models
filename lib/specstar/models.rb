@@ -1,4 +1,5 @@
 require 'rspec/core'
+require 'remarkable/active_record'
 
 module Specstar
   module Models
@@ -45,7 +46,7 @@ module Specstar
           if result && @extras
             properties = target.class.columns_hash[attr]
             @extras.each_pair do |property, value|
-              result = false && break unless properties.send(property) == value
+              result = false && break unless properties.send(property).to_s == value.to_s
             end
           end
 
@@ -69,7 +70,7 @@ module Specstar
         if result && extras.any?
           properties = model.class.columns_hash[attr]
           extras.each_pair do |property, value|
-            result = false && break unless properties.send(property) == value
+            result = false && break unless properties.send(property).to_s == value.to_s
           end
         end
 
@@ -77,13 +78,13 @@ module Specstar
       end
 
       def has_association?(model, association)
-        model.class.reflect_on_all_associations.map { |a| a.name }.include? association.to_sym
+        model.class.reflect_on_all_associations.map { |a| a.name.to_s }.include? association.to_s
       end
 
       RSpec::Matchers.define :validate_presence_of do |attr, options|
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&
-              model._validators[attr].select do |validator|
+              model._validators[attr.to_sym].select do |validator|
                 validator.instance_of?(ActiveModel::Validations::PresenceValidator) && (options.nil? || validate_presence_of_methods_in_options(model, options) && (options.to_a - validator.options.to_a).empty?)
               end.size > 0
         end
