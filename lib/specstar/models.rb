@@ -41,7 +41,7 @@ module Specstar
         end
 
         match do |target|
-          result = target.attributes.include? attr
+          result = target.attributes.keys.map { |key| key.to_s }.include? attr
 
           if result && @extras
             properties = target.class.columns_hash[attr]
