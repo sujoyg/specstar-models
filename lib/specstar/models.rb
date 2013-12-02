@@ -1,5 +1,6 @@
 require 'rspec/core'
 require 'remarkable/active_record'
+require 'rspec/expectations'
 
 module Specstar
   module Models
