@@ -1,3 +1,6 @@
+# 0.1.2
+  * Always converting actual attribute names to string before checking for existence.
+
 # 0.1.1
   * Explicitly require rspec/expectations.
 
