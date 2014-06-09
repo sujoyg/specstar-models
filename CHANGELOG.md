@@ -1,3 +1,6 @@
+# 0.2.0
+  * Feature: Removing specstar-remarkable matchers.
+
 # 0.1.2
   * Always converting actual attribute names to string before checking for existence.
 

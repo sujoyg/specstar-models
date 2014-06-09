@@ -1,4 +1,4 @@
-This package helps you check that the attributes and validations of a model have been defined correctly. It also includes the specstar-remarkable gem which defines matchers for associations.
+This package helps you check that the attributes and validations of a model have been defined correctly.
 
 Matchers
 --------
