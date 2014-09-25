@@ -4,10 +4,6 @@ require 'rspec/expectations'
 module Specstar
   module Models
     module Matchers
-      def properties_to_sentence(hash)
-        " of " + hash.map { |key, value| "#{key} #{value}" }.to_sentence if hash.present?
-      end
-
       def validate_presence_of_methods_in_options(model, options)
         if options[:if] && options[:if].is_a?(Symbol)
           return false unless model.respond_to? options[:if]
@@ -53,12 +49,16 @@ module Specstar
           result
         end
 
-        failure_message_for_should do |target|
+        failure_message do |target|
           "Expected #{target.class} to have an attribute '#{attr}'#{properties_to_sentence @extras}."
         end
 
         description do
           "have an attribute '#{attr}'#{properties_to_sentence @extras}."
+        end
+
+        def properties_to_sentence(hash)
+          " of " + hash.map { |key, value| "#{key} #{value}" }.to_sentence if hash.present?
         end
       end
 
@@ -89,7 +89,7 @@ module Specstar
               end.size > 0
         end
 
-        failure_message_for_should do |model|
+        failure_message do |model|
           if has_attribute?(model, attr) || has_association?(model, attr)
             if options.nil? || validate_presence_of_methods_in_options(model, options)
               "expected #{model.class} to validate presence of #{attr}."
@@ -109,7 +109,7 @@ module Specstar
           end.size > 0
         end
 
-        failure_message_for_should do |model|
+        failure_message do |model|
           if has_attribute?(model, attr) || has_association?(model, attr)
             if options.nil? || validate_presence_of_methods_in_options(model, options)
               "expected #{model.class} to validate uniqueness of #{attr}."
@@ -130,7 +130,7 @@ module Specstar
               end.size > 0
         end
 
-        failure_message_for_should do |model|
+        failure_message do |model|
           if has_attribute?(model, attr) || has_association?(model, attr)
             "expected #{model.class} to validate inclusion of #{attr} in [#{options.delete(:in).map(&:to_s).join(', ')}]."
           else
@@ -149,7 +149,7 @@ module Specstar
               end.size > 0
         end
 
-        failure_message_for_should do |model|
+        failure_message do |model|
           if has_attribute?(model, attr) || has_association?(model, attr)
             "expected #{model.class} to validate numericality of #{attr} in [#{options.delete(:in).map(&:to_s).join(', ')}]."
           else
