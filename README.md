@@ -100,15 +100,34 @@ This matcher allows you to write the following spec:
       it { should validate_uniqueness_of :email }
     end
 
-Using
------
+
+**belong_to**
+
+You may have a model `User` as follows:
+
+    class User < ActiveRecord::Base
+      ...
+      belongs_to :community
+      ...
+    end
+
+This matcher allows you to write the following spec:
+
+    require 'spec_helper'
+
+    describe User do
+      it { should belong_to :community }
+    end
+
+Using in Specs
+--------------
 To make these matchers available in your model specs, do the following:
 
 **Gemfile**
 
     group :test do
       ...
-      gem 'specstar-models', '~> 0.0.4'
+      gem 'specstar-models', '~> 0.2.3'
       ...
     end
 

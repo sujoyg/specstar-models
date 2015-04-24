@@ -157,6 +157,18 @@ module Specstar
           end
         end
       end
+
+      RSpec::Matchers.define :belong_to do |attr|
+        match do |model|
+          association = model.class.reflect_on_association(attr)
+          association && association.macro == :belongs_to
+        end
+
+        failure_message do |model|
+          "expected #{model.class} to belong to #{attr}."
+        end
+      end
+
     end
   end
 end
