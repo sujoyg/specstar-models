@@ -1,3 +1,6 @@
+# 0.2.2
+  * Bug: Fix validate matches to use ActiveRecord instead of ActiveModel.
+
 # 0.2.0
   * Feature: Removing specstar-remarkable matchers.
 

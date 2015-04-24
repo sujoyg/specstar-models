@@ -85,7 +85,7 @@ module Specstar
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&
               model._validators[attr.to_sym].select do |validator|
-                validator.instance_of?(ActiveModel::Validations::PresenceValidator) && (options.nil? || validate_presence_of_methods_in_options(model, options) && (options.to_a - validator.options.to_a).empty?)
+                validator.instance_of?(ActiveRecord::Validations::PresenceValidator) && (options.nil? || validate_presence_of_methods_in_options(model, options) && (options.to_a - validator.options.to_a).empty?)
               end.size > 0
         end
 
@@ -126,7 +126,7 @@ module Specstar
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&
               model._validators[attr].select do |validator|
-                validator.instance_of?(ActiveModel::Validations::InclusionValidator) && validator.options.merge(options) == validator.options
+                validator.instance_of?(ActiveRecord::Validations::InclusionValidator) && validator.options.merge(options) == validator.options
               end.size > 0
         end
 
@@ -145,7 +145,7 @@ module Specstar
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&
               model._validators[attr].select do |validator|
-                validator.instance_of?(ActiveModel::Validations::NumericalityValidator) && validator.options.merge(options) == validator.options
+                validator.instance_of?(ActiveRecord::Validations::NumericalityValidator) && validator.options.merge(options) == validator.options
               end.size > 0
         end
 
