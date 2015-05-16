@@ -100,7 +100,6 @@ This matcher allows you to write the following spec:
       it { should validate_uniqueness_of :email }
     end
 
-
 **belong_to**
 
 You may have a model `User` as follows:
@@ -117,6 +116,24 @@ This matcher allows you to write the following spec:
 
     describe User do
       it { should belong_to :community }
+    end
+
+**have_many**
+
+You may have a model `Blog` as follows:
+
+    class Blog < ActiveRecord::Base
+      ...
+      has_many :posts
+      ...
+    end
+
+This matcher allows you to write the following spec:
+
+    require 'spec_helper'
+
+    describe Blog do
+      it { should have_many :posts }
     end
 
 Using in Specs

@@ -1,5 +1,7 @@
+# 0.2.4
+  * Feature: Adding a matcher for has_many association.
 # 0.2.3
-  * Feature: Adding a matcher for belong_to
+  * Feature: Adding a matcher for belongs_to association.
 
 # 0.2.2
   * Bug: Fix validate matches to use ActiveRecord instead of ActiveModel.
