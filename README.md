@@ -136,6 +136,24 @@ This matcher allows you to write the following spec:
       it { should have_many :posts }
     end
 
+**has_and_belongs_to_many**
+
+You may have a model `Person` as follows:
+
+    class Person < ActiveRecord::Base
+      ...
+      has_and_belongs_to_many :groups, class_name: 'Organization'
+      ...
+    end
+
+This matcher allows you to write the following spec:
+
+    require 'spec_helper'
+
+    describe Person do
+      it { should have_and_belong_to_many :groups, class_name: 'Organization' }
+    end
+
 Using in Specs
 --------------
 To make these matchers available in your model specs, do the following:

@@ -1,3 +1,6 @@
+# 0.2.6
+  * Feature: Adding a matcher for has_and_belongs_to_many association.
+
 # 0.2.5
   * Feature: Ability to match options with association matchers.
 

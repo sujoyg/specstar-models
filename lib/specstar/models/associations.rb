@@ -37,6 +37,21 @@ module Specstar
         end
       end
 
+      RSpec::Matchers.define :have_and_belong_to_many do |attr, options={}|
+        match do |model|
+          association = model.class.reflect_on_association(attr)
+          association && association.macro == :has_and_belongs_to_many && match?(association, options)
+        end
+
+        failure_message do |model|
+          if options
+            "expected #{model.class} to have many #{attr} with #{options}."
+          else
+            "expected #{model.class} to have many #{attr}."
+          end
+        end
+      end
+
     end
   end
 end
