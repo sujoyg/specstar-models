@@ -18,7 +18,11 @@ module Specstar
         end
 
         failure_message do |model|
-          "expected #{model.class} to belong to #{attr}."
+	  if options.present?
+	    "expected #{model.class} to belong to #{attr} with #{options}."
+          else
+            "expected #{model.class} to belong to #{attr}."
+	  end
         end
       end
 
@@ -29,7 +33,7 @@ module Specstar
         end
 
         failure_message do |model|
-          if options
+          if options.present?
             "expected #{model.class} to have many #{attr} with #{options}."
           else
             "expected #{model.class} to have many #{attr}."
@@ -44,10 +48,10 @@ module Specstar
         end
 
         failure_message do |model|
-          if options
-            "expected #{model.class} to have many #{attr} with #{options}."
+          if options.present?
+            "expected #{model.class} to have and belong to many #{attr} with #{options}."
           else
-            "expected #{model.class} to have many #{attr}."
+            "expected #{model.class} to have and belong to many #{attr}."
           end
         end
       end

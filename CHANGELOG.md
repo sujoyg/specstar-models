@@ -1,3 +1,6 @@
+# 0.2.7
+  * Feature: Improving error messages for association matchers.
+
 # 0.2.6
   * Feature: Adding a matcher for has_and_belongs_to_many association.
 

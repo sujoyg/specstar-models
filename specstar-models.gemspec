@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'specstar-models'
-  s.version     = '0.2.6'
+  s.version     = '0.2.7'
   s.date        = Time.now.to_date
   s.summary     = 'RSpec helpers for models.'
   s.description = 'This gem provides RSpec matchers for model attributes and validators.'
