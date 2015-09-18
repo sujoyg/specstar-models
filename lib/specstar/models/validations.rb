@@ -92,7 +92,7 @@ module Specstar
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&
               model._validators[attr].select do |validator|
-                validator.instance_of?(ActiveRecord::Validations::InclusionValidator) && validator.options.merge(options) == validator.options
+                validator.instance_of?(ActiveModel::Validations::InclusionValidator) && validator.options.merge(options) == validator.options
               end.size > 0
         end
 
