@@ -41,6 +41,21 @@ module Specstar
         end
       end
 
+      RSpec::Matchers.define :have_one do |attr, options={}|
+        match do |model|
+          association = model.class.reflect_on_association(attr)
+          association && association.macro == :has_one && match?(association, options)
+        end
+
+        failure_message do |model|
+          if options.present?
+            "expected #{model.class} to have one #{attr} with #{options}."
+          else
+            "expected #{model.class} to have one #{attr}."
+          end
+        end
+      end
+
       RSpec::Matchers.define :have_and_belong_to_many do |attr, options={}|
         match do |model|
           association = model.class.reflect_on_association(attr)

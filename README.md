@@ -136,6 +136,24 @@ This matcher allows you to write the following spec:
       it { should have_many :posts }
     end
 
+**have_one**
+
+You may have a model `Blog` as follows:
+
+    class Blog < ActiveRecord::Base
+      ...
+      has_one :author
+      ...
+    end
+
+This matcher allows you to write the following spec:
+
+    require 'spec_helper'
+
+    describe Blog do
+      it { should have_one :author }
+    end
+
 **has_and_belongs_to_many**
 
 You may have a model `Person` as follows:

@@ -1,3 +1,9 @@
+# 0.2.9
+  * Feature: Adding a matcher for has_one association.
+
+# 0.2.8
+  * Bug: validate_inclusion_of matcher was causing an exception.
+
 # 0.2.7
   * Feature: Improving error messages for association matchers.
 
