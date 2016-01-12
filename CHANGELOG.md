@@ -1,3 +1,6 @@
+# 0.2.10
+  * Fix: validate_numericality_of was not working.
+
 # 0.2.9
   * Feature: Adding a matcher for has_one association.
 
