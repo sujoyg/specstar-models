@@ -1,3 +1,6 @@
+# 0.3.0
+  * Feature: Adding a matcher for custom validations.
+
 # 0.2.10
   * Fix: validate_numericality_of was not working.
 

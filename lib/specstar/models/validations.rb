@@ -47,6 +47,33 @@ module Specstar
         model.class.reflect_on_all_associations.map { |a| a.name.to_s }.include? association.to_s
       end
 
+      RSpec::Matchers.define :validate do |attr, *options, **custom_validations|
+        match do |model|
+          if !has_attribute?(model, attr) && !has_association?(model, attr)
+            false
+          else
+            begin
+              validators = custom_validations.each_pair.to_a.select { |attr, value| value == true }.map(&:first)
+              validators.all? do |validator|
+                klass = "#{validator}_validator".classify.constantize
+                model._validators[attr.to_sym].select { |v| v.instance_of? klass }.size > 0
+              end
+            rescue
+              false
+            end
+          end
+        end
+
+        failure_message do |model|
+          options = [*options, custom_validations]
+          if has_attribute?(model, attr) || has_association?(model, attr)
+            "expected #{model.class} to validate #{attr}."
+          else
+            "expected #{model.class} to have an attribute or association #{attr}."
+          end
+        end
+      end
+
       RSpec::Matchers.define :validate_presence_of do |attr, options|
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&

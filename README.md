@@ -29,6 +29,24 @@ The `have_attribute` matcher allows you test each of these attributes as follows
       it { should have_attribute(:open).with(:type => :boolean) }
     end
 
+**validate**
+
+You may have a model `User` as follows:
+
+    class User < ActiveRecord::Base
+      ...
+      validates :url, url: true
+      ...
+    end
+
+This matcher allows you to write the following spec:
+
+    require 'spec_helper'
+
+    describe User do
+      it { should validate :url, url: true }
+    end
+
 **validate_inclusion_of**
 
 You may have a model `User` as follows:
