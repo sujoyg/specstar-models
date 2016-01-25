@@ -1,3 +1,6 @@
+# 0.3.1
+  * Feature: Allowing matching options for custom validations.
+
 # 0.3.0
   * Feature: Adding a matcher for custom validations.
 

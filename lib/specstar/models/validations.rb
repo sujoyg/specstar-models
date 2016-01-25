@@ -53,10 +53,11 @@ module Specstar
             false
           else
             begin
-              validators = custom_validations.each_pair.to_a.select { |attr, value| value == true }.map(&:first)
-              validators.all? do |validator|
+              custom_validations.each_pair.to_a.all? do |validator, options|
                 klass = "#{validator}_validator".classify.constantize
-                model._validators[attr.to_sym].select { |v| v.instance_of? klass }.size > 0
+                model._validators[attr.to_sym].select { |v|
+                  v.instance_of?(klass) && (!options.is_a?(Hash) || v.options == options)
+                }.size > 0
               end
             rescue
               false
