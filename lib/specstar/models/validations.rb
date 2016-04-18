@@ -75,6 +75,27 @@ module Specstar
         end
       end
 
+      RSpec::Matchers.define :validate_length_of do |attr, options|
+        match do |model|
+          (has_attribute?(model, attr) || has_association?(model, attr)) &&
+              model._validators[attr.to_sym].select do |validator|
+                validator.instance_of?(ActiveModel::Validations::LengthValidator) && (options.nil? || validate_presence_of_methods_in_options(model, options) && (options.to_a - validator.options.to_a).empty?)
+              end.size > 0
+        end
+
+        failure_message do |model|
+          if has_attribute?(model, attr) || has_association?(model, attr)
+            if options.nil? || validate_presence_of_methods_in_options(model, options)
+              "expected #{model.class} to validate length of #{attr}."
+            else
+              "expected #{model.class} to define #{undefined_method_in_options(model, options)}."
+            end
+          else
+            "expected #{model.class} to have an attribute or association #{attr}."
+          end
+        end
+      end
+
       RSpec::Matchers.define :validate_presence_of do |attr, options|
         match do |model|
           (has_attribute?(model, attr) || has_association?(model, attr)) &&

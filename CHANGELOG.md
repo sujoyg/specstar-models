@@ -1,3 +1,6 @@
+# 1.0.0
+  * Feature; Adding a validates_length_of matcher.
+
 # 0.3.1
   * Feature: Allowing matching options for custom validations.
 

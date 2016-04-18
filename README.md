@@ -65,6 +65,24 @@ This matcher allows you to write the following spec:
       it { should validate_inclusion_of :verfied, in: [true, false] }
     end
 
+**validate_length_of**
+
+You may have a model `Article` as follows:
+
+    class Article < ActiveRecord::Base
+      ...
+      validates_length_of :title, maximum: 255
+      ...
+    end
+
+This matcher allows you to write the following spec:
+
+    require 'spec_helper'
+
+    describe Article do
+      it { should validate_length_of :title, maximum: 255 }
+    end
+
 **validate_numericality_of**
 You may have a model `User` as follows:
 
